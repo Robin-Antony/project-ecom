@@ -1,0 +1,45 @@
+{% extends 'store/main.html' %}
+{% load static %}
+
+{% block content %}
+<div class="cart_full_container">
+    <div class="cart_container_one">
+        <div class="cart_continue">
+            <a href="{% url 'store' %}">CONTINUE SHOPPING</a>
+        </div>
+
+        <div class="cart_container_header">
+            <div class="cart_header_twoitem_container">
+                <div class="cart_header_itemtwo">Items: <strong>{{order.get_cart_items}}</strong></div>
+                <div class="cart_header_itemtwo">Total: <strong>${{order.get_cart_total|floatformat:2}}</strong></div>
+            </div>
+            <div class="cart_header_itemthree"><a href="{% url 'checkout' %}">Checkout</a></div>
+        </div>
+    </div>
+    <hr>
+    <div class="cart_container_body">
+        <table>
+        
+            <tr>
+                <th></th>
+                <th>Item</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+            </tr>
+            {% for item in items %}
+            <tr>
+                <td class="cart_image_container"><img src="{{item.product.imageURL}}" alt=""></td>
+                <td>{{item.product.name}}</td>
+                <td>${{item.product.price|floatformat:2}}</td>
+                <td > {{item.quantity}} <button data-product="{{item.product.id}}" data-action="add" class="update-cart">Add</button>
+                    <button  data-product="{{item.product.id}}" data-action="remove" class="update-cart">Remove</button> </td>
+                <td>${{item.get_total|floatformat:2}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+
+{% endblock %}
